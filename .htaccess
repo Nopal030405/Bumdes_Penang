@@ -1,0 +1,67 @@
+# .htaccess - BUMDes Penang
+# Konfigurasi keamanan untuk shared hosting (Rumahweb / cPanel)
+
+# 1. Nonaktifkan directory listing (mencegah orang melihat daftar file)
+Options -Indexes
+
+# 2. Set default charset UTF-8
+AddDefaultCharset UTF-8
+
+# 3. Lindungi file konfigurasi sensitif dari akses langsung via browser
+<FilesMatch "^(db\.php|\.env|\.htaccess|\.htpasswd|database\.sql)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 4. Lindungi folder config dari akses langsung
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^config/ - [F,L]
+</IfModule>
+
+# 5. Mencegah akses ke file .sql (database schema)
+<FilesMatch "\.sql$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 6. Security Headers (penting untuk akses online)
+<IfModule mod_headers.c>
+    # Mencegah MIME type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    # Proteksi dari clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    # XSS Protection
+    Header set X-XSS-Protection "1; mode=block"
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# 7. Kompresi GZIP (mempercepat loading di HP & laptop)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# 8. Caching aset statis (gambar, CSS, JS) — mempercepat akses berulang
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>

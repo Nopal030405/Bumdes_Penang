@@ -1,0 +1,1268 @@
+/* 
+ * BUMDes Penang - Neo-Brutalism Style System
+ * Flat, High-Contrast UI inspired by Natural Springs.
+ * Dominant Neon Teal (#2EF2D6), Electric Blue (#1A5BFF), Sun-Kissed Orange (#FF7A00).
+ * Clean Off-White (#F8F9FA) background, thick Pure Black (#000000) borders and hard box shadows.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap');
+
+:root {
+    /* Color Palette */
+    --bg-main: #F8F9FA;          /* Clean Off-White */
+    --bg-card: #FFFFFF;          /* Pure White for Card Content */
+    --bg-input: #FFFFFF;
+    
+    --text-primary: #000000;    /* Pure Black text */
+    --text-secondary: #1a1d20;
+    --text-muted: #495057;
+    
+    /* Neobrutalist Accents */
+    --accent-teal: #2EF2D6;     /* Neon Teal */
+    --accent-blue: #1A5BFF;     /* Electric Blue */
+    --accent-orange: #FF7A00;   /* Sun-Kissed Orange */
+    
+    /* Standard operational statuses mapped to theme */
+    --accent-success: #2EF2D6;
+    --accent-danger: #FF7A00;
+    
+    /* Brutalist Border Rules */
+    --border-color: #000000;
+    --border-width: 3px;
+    --border-style: solid;
+    --border-thick: var(--border-width) var(--border-style) var(--border-color);
+    --border-thin: 2px var(--border-style) var(--border-color);
+    
+    /* Hard Box Shadows (No Blur) */
+    --shadow-hard-small: 3px 3px 0px #000000;
+    --shadow-hard: 6px 6px 0px #000000;
+    --shadow-hard-large: 10px 10px 0px #000000;
+    
+    /* Typography */
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    
+    /* Brutalist Interactive Transitions */
+    --transition-neobrutal: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    line-height: 1.5;
+    overflow-x: hidden;
+    padding-bottom: 3rem;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5; /* Opasitas 50% sesuai permintaan user */
+    z-index: -1;
+    pointer-events: none;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5); /* Shadow sedikit (vignette) pada background */
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* Header & Navbar */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    background: #FFFFFF;
+    border: var(--border-thick);
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-hard);
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 1.2rem;
+        text-align: center;
+        padding: 1.5rem;
+    }
+}
+
+.logo-section h1 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+.logo-section p {
+    font-size: 0.75rem;
+    color: var(--accent-blue);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 0.15rem;
+}
+
+.status-operasional {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #FFFFFF;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard-small);
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #000000;
+}
+
+.status-indicator.buka {
+    background-color: var(--accent-teal);
+    box-shadow: none;
+    animation: pulse-brutal-teal 1.5s infinite;
+}
+
+.status-indicator.tutup {
+    background-color: var(--accent-orange);
+    box-shadow: none;
+    animation: pulse-brutal-orange 1.5s infinite;
+}
+
+.status-text {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.time-display {
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+    color: var(--accent-blue);
+    background: #FFFFFF;
+    padding: 0.1rem 0.4rem;
+    border-left: 2px solid #000000;
+    padding-left: 0.75rem;
+}
+
+/* Dashboard Grid Layout */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Neobrutalist Glass Card (Drop-in styling for HTML compatibility) */
+.glass-card {
+    background: var(--bg-card);
+    border: var(--border-thick);
+    border-radius: 8px;
+    padding: 1.75rem;
+    box-shadow: var(--shadow-hard);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: visible; /* Allow shadows to pop out */
+}
+
+/* Clear visual header bar for brutalist design */
+.glass-card::before {
+    display: none; /* Disable top gradient strip */
+}
+
+.card-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: var(--border-thick);
+    padding-bottom: 0.75rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: -0.2px;
+}
+
+/* Quick Buttons Container */
+.quick-input-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 576px) {
+    .quick-input-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Quick Buttons with neobrutalist press effect */
+.btn-quick {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.2rem 1rem;
+    border-radius: 8px;
+    border: var(--border-thick) !important;
+    color: #000000 !important;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    box-shadow: var(--shadow-hard) !important;
+    transition: var(--transition-neobrutal);
+    position: relative;
+}
+
+.btn-quick .btn-icon {
+    font-size: 2.8rem;
+    margin-bottom: 0.6rem;
+    filter: drop-shadow(2px 2px 0px rgba(0,0,0,1));
+    transition: var(--transition-neobrutal);
+}
+
+.btn-quick .btn-label {
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.btn-quick .btn-tarif {
+    font-size: 0.9rem;
+    background: #FFFFFF;
+    padding: 0.2rem 0.6rem;
+    border: var(--border-thin);
+    border-radius: 4px;
+    margin-top: 0.4rem;
+    font-weight: 700;
+    box-shadow: 2px 2px 0px #000000;
+}
+
+/* Motor Button specifies (Neon Teal) */
+.btn-motor {
+    background: var(--accent-teal);
+}
+
+.btn-motor:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 10px 10px 0px #000000 !important;
+}
+
+.btn-motor:active {
+    transform: translate(2px, 2px);
+    box-shadow: 4px 4px 0px #000000 !important;
+}
+
+/* Mobil Button specifies (Electric Blue) */
+.btn-mobil {
+    background: var(--accent-blue);
+    /* For electric blue card, let's keep labels readable in high contrast */
+    color: #000000 !important; 
+}
+
+.btn-mobil:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 10px 10px 0px #000000 !important;
+}
+
+.btn-mobil:active {
+    transform: translate(2px, 2px);
+    box-shadow: 4px 4px 0px #000000 !important;
+}
+
+/* Disabled Quick Button state */
+.btn-quick.disabled {
+    background: #E9ECEF !important;
+    border-color: #000000 !important;
+    color: #868E96 !important;
+    cursor: not-allowed;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.btn-quick.disabled .btn-icon {
+    filter: grayscale(100%) opacity(0.3);
+}
+
+.btn-quick.disabled .btn-tarif {
+    box-shadow: none;
+    color: #868E96;
+    background: #DEE2E6;
+}
+
+/* Stats Cards (Mini Brutalist Cards) */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stat-item {
+    background: #FFFFFF;
+    border: var(--border-thick);
+    border-radius: 8px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    box-shadow: var(--shadow-hard-small);
+    transition: var(--transition-neobrutal);
+}
+
+.stat-item:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hard);
+}
+
+.stat-item .stat-label {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.stat-item .stat-value {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #000000;
+}
+
+.stat-item .stat-counter {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: #000000;
+    margin-top: 0.4rem;
+    font-weight: 700;
+    background: var(--accent-teal);
+    padding: 0.1rem 0.5rem;
+    border: var(--border-thin);
+    border-radius: 4px;
+}
+
+/* Grand Total Card (Sun-Kissed Orange) */
+.grand-total-card {
+    background: var(--accent-orange);
+    border: var(--border-thick);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.75rem;
+    box-shadow: var(--shadow-hard);
+    transition: var(--transition-neobrutal);
+}
+
+.grand-total-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hard-large);
+}
+
+.grand-total-card .grand-label {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.35rem;
+    font-weight: 800;
+}
+
+.grand-total-card .grand-value {
+    font-family: var(--font-heading);
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: #000000;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-control {
+    width: 100%;
+    background: var(--bg-input);
+    border: var(--border-thick);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    color: #000000;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-hard-small);
+    transition: var(--transition-neobrutal);
+}
+
+.input-control:focus {
+    outline: none;
+    border-color: #000000;
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hard);
+}
+
+/* Brutalist Button Family */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.5rem;
+    border-radius: 6px;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    transition: var(--transition-neobrutal);
+    width: 100%;
+}
+
+.btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hard-small);
+}
+
+.btn-primary {
+    background: var(--accent-orange);
+    color: #000000;
+}
+
+.btn-primary:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px #000000;
+}
+
+.btn-primary:active {
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0px #000000;
+}
+
+.btn-secondary {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.btn-secondary:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px #000000;
+}
+
+.btn-secondary:active {
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0px #000000;
+}
+
+.btn-success {
+    background: var(--accent-teal);
+    color: #000000;
+}
+
+.btn-success:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px #000000;
+}
+
+.btn-success:active {
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0px #000000;
+}
+
+/* Action Buttons Container (Excel, Settings, etc) */
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+/* Tables in Neobrutalism format */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    border: var(--border-thick);
+    border-radius: 8px;
+    box-shadow: var(--shadow-hard);
+    margin-top: 1.25rem;
+    background: #FFFFFF;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+th {
+    background: var(--accent-teal);
+    color: #000000;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    padding: 1rem;
+    border-bottom: var(--border-thick);
+    border-right: var(--border-thick);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 1rem;
+    border-bottom: var(--border-thick);
+    border-right: var(--border-thick);
+    color: #000000;
+    font-weight: 600;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+td:last-child, th:last-child {
+    border-right: none;
+}
+
+tr:hover td {
+    background: rgba(46, 242, 214, 0.08); /* Highlight with teal */
+}
+
+/* Badges with flat border/shadow */
+.badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    border: var(--border-thin);
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 800;
+    box-shadow: 2px 2px 0px #000000;
+    text-transform: uppercase;
+}
+
+.badge-blue {
+    background: var(--accent-blue);
+    color: #000000;
+}
+
+.badge-purple {
+    background: var(--accent-orange);
+    color: #000000;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: #FFFFFF;
+    border: var(--border-thick);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    box-shadow: var(--shadow-hard-large);
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: var(--border-thick);
+    padding-bottom: 0.75rem;
+}
+
+.modal-header h3 {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.modal-close {
+    background: #FFFFFF;
+    border: var(--border-thin);
+    color: #000000;
+    font-size: 1.25rem;
+    font-weight: 800;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000000;
+    transition: var(--transition-neobrutal);
+}
+
+.modal-close:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px #000000;
+}
+
+.modal-close:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #000000;
+}
+
+/* Toast Notification (Neobrutalist box style) */
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+@media (max-width: 576px) {
+    .toast-container {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+}
+
+.toast {
+    background: #FFFFFF;
+    border: var(--border-thick);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    color: #000000;
+    min-width: 290px;
+    box-shadow: var(--shadow-hard);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transform: translateY(20px);
+    opacity: 0;
+    font-weight: 700;
+    animation: slide-in-brutal 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+}
+
+.toast.success {
+    background: var(--accent-teal);
+}
+
+.toast.error {
+    background: var(--accent-orange);
+}
+
+.toast.info {
+    background: var(--accent-blue);
+    color: #FFFFFF; /* High contrast white text for Electric Blue */
+}
+
+/* History Logs List (Brutalist blocks) */
+.history-list {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem;
+    background: #FFFFFF;
+    border: var(--border-thick);
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow-hard-small);
+    transition: var(--transition-neobrutal);
+}
+
+.history-item:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-hard);
+}
+
+.history-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-name {
+    font-weight: 800;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+}
+
+.history-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.history-amount {
+    font-weight: 900;
+    color: #000000;
+    background: var(--accent-teal);
+    padding: 0.2rem 0.5rem;
+    border: var(--border-thin);
+    border-radius: 4px;
+    font-family: var(--font-heading);
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+    border-left: 2px solid #000000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #000000;
+    border: 2px solid var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-blue);
+}
+
+/* Brutalist Keyframe Pulses (No soft shadow blurs) */
+@keyframes pulse-brutal-teal {
+    0% {
+        border-color: #000000;
+    }
+    50% {
+        border-color: var(--accent-blue);
+    }
+    100% {
+        border-color: #000000;
+    }
+}
+
+@keyframes pulse-brutal-orange {
+    0% {
+        border-color: #000000;
+    }
+    50% {
+        border-color: var(--accent-blue);
+    }
+    100% {
+        border-color: #000000;
+    }
+}
+
+@keyframes slide-in-brutal {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ================= SPA ROUTING & PAGES ================= */
+.app-page {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.app-page.active-page {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ================= PAGE 1: MENU UTAMA ================= */
+.welcome-banner {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: #FFFFFF;
+    border: var(--border-thick);
+    border-radius: 8px;
+    box-shadow: var(--shadow-hard);
+}
+
+.welcome-banner h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-banner p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+.menu-card {
+    background: #FFFFFF;
+    border: var(--border-thick);
+    border-radius: 8px;
+    padding: 2.2rem 2rem;
+    box-shadow: var(--shadow-hard);
+    cursor: pointer;
+    transition: var(--transition-neobrutal);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.menu-card:hover {
+    transform: translate(-6px, -6px);
+    box-shadow: var(--shadow-hard-large);
+    background: #FAFAFA;
+}
+
+.menu-card:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hard-small);
+}
+
+.menu-card-icon {
+    font-size: 3.2rem;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.15));
+}
+
+.menu-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #000000;
+}
+
+.menu-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 500;
+    flex-grow: 1; /* Biar tombol sejajar di bawah */
+}
+
+.menu-card-btn {
+    display: inline-block;
+    background: var(--accent-teal);
+    color: #000000;
+    border: var(--border-thin);
+    border-radius: 4px;
+    padding: 0.55rem 1.25rem;
+    font-weight: 800;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0px #000000;
+    transition: var(--transition-neobrutal);
+    margin-top: 1rem;
+}
+
+.menu-card:hover .menu-card-btn {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px #000000;
+}
+
+/* ================= MODULE PAGES GENERALS ================= */
+.page-actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.btn-back {
+    max-width: fit-content;
+    background: #FFFFFF;
+    color: #000000;
+    font-weight: 800;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.btn-back:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px #000000;
+}
+
+.narrow-container {
+    max-width: 550px;
+    margin: 0 auto;
+}
+
+/* ================= PAGE 2b: WEEKLY CALENDAR & LOCK ================= */
+.info-rekap-minggu {
+    background: #F1F3F5;
+    border: var(--border-thick);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-hard-small);
+}
+
+.week-range-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.35rem;
+}
+
+.week-range-value {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #000000;
+    margin-bottom: 1rem;
+}
+
+.download-status-badge {
+    display: inline-block;
+    padding: 0.45rem 1.1rem;
+    border-radius: 4px;
+    border: var(--border-thin);
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 900;
+    box-shadow: 2px 2px 0px #000000;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+.download-status-badge.locked {
+    background: var(--accent-orange);
+    color: #000000;
+}
+
+.download-status-badge.available {
+    background: var(--accent-teal);
+    color: #000000;
+}
+
+.week-error-message {
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+}
+
+.week-error-message.error {
+    color: #E03131;
+}
+
+.week-error-message.success {
+    color: #099268;
+}
+
+/* ================= MISC ELEMENTS ================= */
+.loading-text {
+    text-align: center;
+    color: var(--text-muted);
+    font-weight: 700;
+    padding: 2.5rem 0;
+    font-size: 0.95rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.action-icon-btn {
+    background: #FFE3E3;
+    color: #E03131;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    padding: 0.3rem 0.6rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000000;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    transition: var(--transition-neobrutal);
+}
+
+.action-icon-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px #000000;
+}
+
+.action-icon-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #000000;
+}
+
+/* ================= LOGIN PAGE STYLING ================= */
+.login-body {
+    background-color: var(--bg-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+}
+
+.login-wrapper {
+    width: 100%;
+    max-width: 450px;
+}
+
+.login-card {
+    background: #FFFFFF;
+    border: var(--border-thick);
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-hard-large);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: var(--border-thick);
+    padding-bottom: 1.25rem;
+}
+
+.login-header h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    color: #000000;
+    margin-bottom: 0.25rem;
+}
+
+.login-header p {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.login-error-alert {
+    background: #FFE3E3;
+    color: #E03131;
+    border: var(--border-thin);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    font-weight: 700;
+    font-size: 0.88rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 2px 2px 0px #000000;
+    text-align: center;
+}
+
+.login-footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    line-height: 1.5;
+    margin-top: 2rem;
+    border-top: var(--border-thin);
+    padding-top: 1rem;
+}
+
+/* ================= CALENDAR STYLES (NEO-BRUTALISM) ================= */
+.calendar-day-cell {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border: var(--border-thin);
+    border-radius: 6px;
+    box-shadow: 2px 2px 0px #000000;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transition-neobrutal);
+    background: #FFFFFF;
+    color: #000000;
+    position: relative;
+    user-select: none;
+}
+
+.calendar-day-cell:hover:not(.empty-cell) {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px #000000;
+}
+
+.calendar-day-cell:active:not(.empty-cell) {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #000000;
+}
+
+/* 3 Warna Indikator */
+.calendar-day-cell.libur {
+    background: var(--accent-orange) !important;
+    color: #000000 !important;
+}
+
+.calendar-day-cell.terekap {
+    background: var(--accent-teal) !important;
+    color: #000000 !important;
+}
+
+.calendar-day-cell.empty-cell {
+    visibility: hidden;
+    pointer-events: none;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.calendar-day-cell.active-day {
+    border: 3px solid var(--accent-blue) !important;
+    box-shadow: 4px 4px 0px #000000 !important;
+}
+
+.calendar-grid-header div {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.legend-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border: var(--border-thin);
+    border-radius: 4px;
+    box-shadow: 1px 1px 0px #000000;
+}
+
+.legend-color.color-libur {
+    background: var(--accent-orange);
+}
+
+.legend-color.color-terekap {
+    background: var(--accent-teal);
+}
+
+.legend-color.color-belum {
+    background: #FFFFFF;
+}
+
