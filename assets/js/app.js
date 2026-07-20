@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Elemen Kalender Page 2b
     const btnPrevMonth = document.getElementById('btn-prev-month');
     const btnNextMonth = document.getElementById('btn-next-month');
-    const btnToggleLiburSelected = document.getElementById('btn-toggle-libur-selected');
+    const labelStatusLiburSelected = document.getElementById('label-status-libur-selected');
     const btnExportDailySelected = document.getElementById('btn-export-daily-selected');
     const btnExportRange = document.getElementById('btn-export-range');
     
@@ -158,20 +158,27 @@ document.addEventListener('DOMContentLoaded', () => {
             togglePencatatanButtons(false);
         }
         
-        // 2. Update Status & Tombol Libur Satu Hari Utuh di Page 1 (Menu Utama)
+        // 2. Update Status & Tombol Libur Satu Hari Utuh di Page 1 (Menu Utama) & Rekap Harian
         const labelStatusLiburMenu = document.getElementById('label-status-libur-menu');
-        const btnToggleLiburMenu = document.getElementById('btn-toggle-libur-menu');
-        if (labelStatusLiburMenu && btnToggleLiburMenu) {
+        const btnToggleLiburHarian = document.getElementById('btn-toggle-libur-harian');
+        
+        if (labelStatusLiburMenu) {
             if (isLibur) {
                 labelStatusLiburMenu.textContent = '🏖️ LIBUR UTUH';
                 labelStatusLiburMenu.className = 'badge badge-purple';
-                btnToggleLiburMenu.textContent = '💼 Aktifkan Operasional';
-                btnToggleLiburMenu.className = 'btn btn-success';
             } else {
                 labelStatusLiburMenu.textContent = '🟢 AKTIF';
                 labelStatusLiburMenu.className = 'badge badge-blue';
-                btnToggleLiburMenu.textContent = '🏖️ Atur Hari Libur';
-                btnToggleLiburMenu.className = 'btn btn-warning';
+            }
+        }
+        
+        if (btnToggleLiburHarian) {
+            if (isLibur) {
+                btnToggleLiburHarian.textContent = '💼 Aktifkan Operasional';
+                btnToggleLiburHarian.className = 'btn btn-success';
+            } else {
+                btnToggleLiburHarian.textContent = '🏖️ Atur Hari Libur';
+                btnToggleLiburHarian.className = 'btn btn-warning';
             }
         }
         
@@ -443,18 +450,25 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(err => console.error('Gagal memuat pendapatan tambahan:', err));
     };
 
-    // --- Toggle Libur Satu Hari Utuh (Page 1) ---
-    const btnToggleLiburMenu = document.getElementById('btn-toggle-libur-menu');
-    if (btnToggleLiburMenu) {
-        btnToggleLiburMenu.addEventListener('click', () => {
+    // --- Toggle Libur Satu Hari Utuh (Page 2a) ---
+    const btnToggleLiburHarian = document.getElementById('btn-toggle-libur-harian');
+    if (btnToggleLiburHarian) {
+        btnToggleLiburHarian.addEventListener('click', () => {
             const nextStatus = (config.status_libur === '1') ? '0' : '1';
+            
+            let keterangan = '';
+            if (nextStatus === '1') {
+                keterangan = prompt('Masukkan keterangan libur:', 'Hari Libur Nasional');
+                if (keterangan === null) return;
+            }
             
             fetch('api/pengaturan.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     action: 'toggle_libur',
-                    status_libur: nextStatus
+                    status_libur: nextStatus,
+                    keterangan: keterangan
                 })
             })
             .then(res => res.json())
@@ -648,14 +662,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     if (grandTotalEl) grandTotalEl.textContent = formatRupiah(data.grand_total);
                     
-                    if (btnToggleLiburSelected) {
-                        btnToggleLiburSelected.setAttribute('data-libur', data.is_libur ? '1' : '0');
+                    if (labelStatusLiburSelected) {
+                        labelStatusLiburSelected.setAttribute('data-libur', data.is_libur ? '1' : '0');
                         if (data.is_libur) {
-                            btnToggleLiburSelected.textContent = '🏖️ LIBUR';
-                            btnToggleLiburSelected.className = 'badge badge-purple';
+                            labelStatusLiburSelected.textContent = '🏖️ LIBUR';
+                            labelStatusLiburSelected.className = 'badge badge-purple';
                         } else {
-                            btnToggleLiburSelected.textContent = '🟢 AKTIF';
-                            btnToggleLiburSelected.className = 'badge badge-blue';
+                            labelStatusLiburSelected.textContent = '🟢 AKTIF';
+                            labelStatusLiburSelected.className = 'badge badge-blue';
+                        }
+                    }
+                    
+                    const ketEl = document.getElementById('selected-date-keterangan');
+                    if (ketEl) {
+                        if (data.is_libur && data.keterangan_libur) {
+                            ketEl.textContent = `Keterangan: ${data.keterangan_libur}`;
+                            ketEl.style.display = 'block';
+                        } else {
+                            ketEl.style.display = 'none';
                         }
                     }
                     
@@ -703,37 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
-    const toggleLiburForSelectedDate = () => {
-        if (!btnToggleLiburSelected || !calendarSelectedDate) return;
-        
-        const currentStatus = btnToggleLiburSelected.getAttribute('data-libur') === '1';
-        const nextStatus = currentStatus ? '0' : '1';
-        
-        fetch('api/pengaturan.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                action: 'toggle_libur_date',
-                tanggal: calendarSelectedDate,
-                status_libur: nextStatus
-            })
-        })
-        .then(res => res.json())
-        .then(res => {
-            if (res.status === 'success') {
-                showToast(res.message, 'success');
-                renderCalendar();
-                loadSelectedDateStats(calendarSelectedDate);
-                loadAppConfigAndStats();
-            } else {
-                showToast(res.message, 'error');
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            showToast('Gagal memperbarui status libur.', 'error');
-        });
-    };
+
 
     // Binding Click Events Kalender Page 2b
     if (btnPrevMonth) {
@@ -758,9 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resetCalendarSelection();
         });
     }
-    if (btnToggleLiburSelected) {
-        btnToggleLiburSelected.addEventListener('click', toggleLiburForSelectedDate);
-    }
+
     if (btnExportDailySelected) {
         btnExportDailySelected.addEventListener('click', () => {
             if (!calendarSelectedDate) return;

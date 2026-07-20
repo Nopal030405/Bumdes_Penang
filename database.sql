@@ -46,6 +46,7 @@ CREATE INDEX `idx_tambahan_created_at` ON `pendapatan_tambahan` (`created_at`);
 CREATE TABLE IF NOT EXISTS `hari_libur` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `tanggal` DATE NOT NULL UNIQUE,
+    `keterangan` VARCHAR(255) NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

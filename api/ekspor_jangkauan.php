@@ -61,6 +61,9 @@ try {
     // Tulis UTF-8 BOM untuk kompatibilitas Excel
     fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
     
+    // Tulis pemisah (separator) khusus agar rapi di Microsoft Excel versi apapun
+    fprintf($output, "sep=,\n");
+    
     // --- HEADER LAPORAN ---
     fputcsv($output, ["BUMDES PENANG - LAPORAN REKAP PENDAPATAN JANGKAUAN CUSTOM"]);
     fputcsv($output, ["Rentang Rekap", date('d F Y', $start_time) . " s.d. " . date('d F Y', $end_time)]);

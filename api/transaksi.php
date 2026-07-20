@@ -159,9 +159,16 @@ if ($method === 'GET') {
         $grand_total = $total_kendaraan + intval($tambahan['total']);
         
         // Cek apakah tanggal terpilih diset libur
-        $stmt_libur_date = $pdo->prepare("SELECT COUNT(*) FROM hari_libur WHERE tanggal = ?");
+        $stmt_libur_date = $pdo->prepare("SELECT keterangan FROM hari_libur WHERE tanggal = ?");
         $stmt_libur_date->execute([$tanggal]);
-        $tanggal_terpilih_libur = intval($stmt_libur_date->fetchColumn()) > 0;
+        $row_libur = $stmt_libur_date->fetch();
+        
+        $tanggal_terpilih_libur = false;
+        $keterangan_libur = '';
+        if ($row_libur !== false) {
+            $tanggal_terpilih_libur = true;
+            $keterangan_libur = $row_libur['keterangan'] ?? '';
+        }
         
         echo json_encode([
             'status' => 'success',
@@ -174,7 +181,8 @@ if ($method === 'GET') {
                     'total' => intval($tambahan['total'])
                 ],
                 'grand_total' => $grand_total,
-                'is_libur' => $tanggal_terpilih_libur
+                'is_libur' => $tanggal_terpilih_libur,
+                'keterangan_libur' => $keterangan_libur
             ]
         ]);
         

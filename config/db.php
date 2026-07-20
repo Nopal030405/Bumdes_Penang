@@ -8,10 +8,10 @@
 date_default_timezone_set('Asia/Jakarta');
 
 // Konfigurasi Database (Sesuaikan saat deploy di cPanel)
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'bumdes_penang');
+define('DB_HOST', 'sql207.infinityfree.com');
+define('DB_USER', 'if0_42433547');
+define('DB_PASS', 'mLdETQ1jow9fazR'); 
+define('DB_NAME', 'if0_42433547_bumdes');
 
 try {
     // Membuat koneksi database menggunakan PDO
@@ -28,6 +28,13 @@ try {
     
     // Sinkronisasi zona waktu session MySQL dengan PHP (+07:00 untuk Asia/Jakarta)
     $pdo->exec("SET time_zone = '+07:00'");
+    
+    // Auto-migrate: Tambahkan kolom keterangan pada tabel hari_libur jika belum ada
+    try {
+        $pdo->exec("ALTER TABLE hari_libur ADD COLUMN keterangan VARCHAR(255) NULL AFTER tanggal");
+    } catch (PDOException $e) {
+        // Abaikan error jika kolom sudah ada
+    }
     
 } catch (PDOException $e) {
     // Tampilkan pesan error JSON jika dipanggil via API, atau teks jika langsung

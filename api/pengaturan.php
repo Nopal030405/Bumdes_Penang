@@ -160,6 +160,8 @@ if ($method === 'POST') {
     // --- 4. Aksi Toggle Libur ---
     if ($action === 'toggle_libur') {
         $status_libur = isset($input['status_libur']) ? trim($input['status_libur']) : '0';
+        $keterangan = isset($input['keterangan']) ? trim($input['keterangan']) : 'Libur';
+        
         if ($status_libur !== '1' && $status_libur !== '0') {
             http_response_code(400);
             echo json_encode(['status' => 'error', 'message' => 'Status libur tidak valid.']);
@@ -172,8 +174,8 @@ if ($method === 'POST') {
             $stmt->execute([$status_libur]);
             
             if ($status_libur === '1') {
-                $stmt_libur = $pdo->prepare("INSERT IGNORE INTO hari_libur (tanggal) VALUES (CURDATE())");
-                $stmt_libur->execute();
+                $stmt_libur = $pdo->prepare("INSERT INTO hari_libur (tanggal, keterangan) VALUES (CURDATE(), ?) ON DUPLICATE KEY UPDATE keterangan = VALUES(keterangan)");
+                $stmt_libur->execute([$keterangan]);
             } else {
                 $stmt_libur = $pdo->prepare("DELETE FROM hari_libur WHERE tanggal = CURDATE()");
                 $stmt_libur->execute();
@@ -196,6 +198,7 @@ if ($method === 'POST') {
     if ($action === 'toggle_libur_date') {
         $tanggal = isset($input['tanggal']) ? trim($input['tanggal']) : '';
         $status_libur = isset($input['status_libur']) ? trim($input['status_libur']) : '0';
+        $keterangan = isset($input['keterangan']) ? trim($input['keterangan']) : 'Libur';
         
         if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $tanggal)) {
             http_response_code(400);
@@ -206,8 +209,8 @@ if ($method === 'POST') {
         try {
             $pdo->beginTransaction();
             if ($status_libur === '1') {
-                $stmt = $pdo->prepare("INSERT IGNORE INTO hari_libur (tanggal) VALUES (?)");
-                $stmt->execute([$tanggal]);
+                $stmt = $pdo->prepare("INSERT INTO hari_libur (tanggal, keterangan) VALUES (?, ?) ON DUPLICATE KEY UPDATE keterangan = VALUES(keterangan)");
+                $stmt->execute([$tanggal, $keterangan]);
             } else {
                 $stmt = $pdo->prepare("DELETE FROM hari_libur WHERE tanggal = ?");
                 $stmt->execute([$tanggal]);

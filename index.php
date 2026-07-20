@@ -27,7 +27,7 @@ require_once __DIR__ . '/config/db.php';
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Link Stylesheet -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=1753098000">
 </head>
 <body>
 
@@ -40,7 +40,7 @@ require_once __DIR__ . '/config/db.php';
                 <p>Sistem Rekap Keuangan Mandiri</p>
             </div>
             
-            <div class="header-right-section" style="display: flex; align-items: center; gap: 1rem;">
+            <div class="header-right-section">
                 <div class="status-operasional">
                     <div id="status-indicator" class="status-indicator tutup"></div>
                     <span id="status-text" class="status-text">Memuat Status...</span>
@@ -60,18 +60,10 @@ require_once __DIR__ . '/config/db.php';
                 <p>Silakan pilih modul rekapitulasi keuangan yang ingin Anda jalankan di bawah ini:</p>
             </div>
 
-            <!-- Kontrol Libur Hari Ini -->
-            <div class="glass-card" style="margin-bottom: 2rem; border-top: 3px solid var(--accent-orange);">
-                <div class="card-title" style="margin-bottom: 1rem; border-bottom: none; padding-bottom: 0;">
-                    <span>Kontrol Libur Satu Hari Utuh</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
-                    <div style="font-weight: 700; font-size: 0.95rem;">
-                        Status Libur Hari Ini: <span id="label-status-libur-menu" class="badge" style="margin-left: 0.5rem;">Memuat...</span>
-                    </div>
-                    <button id="btn-toggle-libur-menu" class="btn btn-warning" style="max-width: fit-content; margin: 0; padding: 0.6rem 1.2rem; font-size: 0.9rem;">
-                        🏖️ Atur Hari Libur
-                    </button>
+            <!-- Kontrol Libur Hari Ini (Hanya Status) -->
+            <div class="glass-card" style="margin-bottom: 2rem; border-top: 3px solid var(--accent-orange); text-align: center;">
+                <div style="font-weight: 700; font-size: 0.95rem;">
+                    Status Operasional BUMDes Hari Ini: <span id="label-status-libur-menu" class="badge" style="margin-left: 0.5rem;">Memuat...</span>
                 </div>
             </div>
             
@@ -106,8 +98,12 @@ require_once __DIR__ . '/config/db.php';
         <div id="page-harian" class="app-page">
             <div class="page-actions-bar">
                 <button class="btn btn-back btn-back-menu">&larr; Kembali ke Menu Utama</button>
-                <!-- Tombol Tutup Sementara -->
-                <button id="btn-toggle-tutup-sementara" class="btn btn-warning">⚠️ Tutup Sementara / Lebih Awal</button>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: nowrap; width: 100%; max-width: 500px;">
+                    <!-- Tombol Atur Libur (Dipindah dari Menu Utama) -->
+                    <button id="btn-toggle-libur-harian" class="btn btn-warning" style="flex: 1; min-width: 0; padding: 0.6rem; font-size: 0.85rem; width: auto;">🏖️ Atur Libur</button>
+                    <!-- Tombol Tutup Sementara -->
+                    <button id="btn-toggle-tutup-sementara" class="btn btn-warning" style="flex: 1; min-width: 0; padding: 0.6rem; font-size: 0.85rem; width: auto;">⚠️ Tutup Sementara</button>
+                </div>
             </div>
             
             <div class="dashboard-grid">
@@ -272,9 +268,12 @@ require_once __DIR__ . '/config/db.php';
                             </h4>
 
                             <!-- Status Operasional Tanggal Terpilih -->
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; background: #FFFFFF; border: var(--border-thin); padding: 0.75rem; border-radius: 6px; box-shadow: 2px 2px 0px #000000;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; background: #FFFFFF; border: var(--border-thin); padding: 0.75rem; border-radius: 6px; box-shadow: 2px 2px 0px #000000;">
                                 <span style="font-weight: 800; font-size: 0.85rem; text-transform: uppercase;">Status Operasional:</span>
-                                <button id="btn-toggle-libur-selected" class="badge" style="cursor: pointer; font-size: 0.75rem; border: var(--border-thin); box-shadow: 1px 1px 0px #000000; font-weight: 800; text-transform: uppercase;">Memuat...</button>
+                                <span id="label-status-libur-selected" class="badge" style="font-size: 0.75rem; border: var(--border-thin); box-shadow: 1px 1px 0px #000000; font-weight: 800; text-transform: uppercase;">Memuat...</span>
+                            </div>
+                            <div id="selected-date-keterangan" style="display: none; background: #FFF4E5; border: var(--border-thin); padding: 0.5rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; color: var(--accent-orange); margin-bottom: 1.25rem; text-align: center;">
+                                Keterangan: -
                             </div>
 
                             <!-- Grand Total Tanggal Terpilih -->
@@ -439,12 +438,43 @@ require_once __DIR__ . '/config/db.php';
             </div>
         </div>
 
+        <!-- FOOTER KKN -->
+        <div class="footer-kkn">
+            <img src="assets/logo-utm.png" alt="Logo UTM" class="footer-logo">
+            
+            <div class="footer-center">
+                <div class="footer-title">KKN 30 UTM</div>
+                <div class="footer-subtitle">Ds Somalang, Kec Pakong, Kab Pamekasan</div>
+            </div>
+            
+            <img src="assets/logo-kkn.png" alt="Logo KKN" class="footer-logo">
+        </div>
+
+        <!-- Social Media Icons (di luar kotak) -->
+        <div class="footer-socials-bar">
+            <a href="https://www.tiktok.com/@kkn30somalang2026" target="_blank" title="TikTok" class="footer-social-link" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.589 6.686a4.793 4.793 0 0 1-3.97-1.561 4.995 4.995 0 0 1-1.236-3.125H9.636v13.565a3.535 3.535 0 0 1-3.536 3.535 3.536 3.536 0 0 1-3.536-3.535 3.536 3.536 0 0 1 3.536-3.535c.189 0 .373.015.554.043V7.632a8.212 8.212 0 0 0-.554-.019A8.324 8.324 0 0 0 4.15 11.23a8.318 8.318 0 0 0-2.43 5.922 8.318 8.318 0 0 0 2.43 5.92 8.322 8.322 0 0 0 5.918 2.431 8.322 8.322 0 0 0 5.918-2.431 8.318 8.318 0 0 0 2.432-5.92V9.654a9.715 9.715 0 0 0 5.171 1.492V6.304a4.957 4.957 0 0 1-4.001-1.618z"/>
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/jejakdesasomalang" target="_blank" title="Instagram" class="footer-social-link" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.169a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
+                </svg>
+            </a>
+            <a href="https://wa.me/6281999602618" target="_blank" title="WhatsApp" class="footer-social-link" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.013 2C6.486 2 2 6.486 2 12.013c0 1.94.545 3.755 1.498 5.31L2 22l4.825-1.446A9.972 9.972 0 0012.013 22c5.526 0 10.013-4.486 10.013-10.013S17.539 2 12.013 2zm5.727 14.332c-.244.686-1.42 1.309-1.968 1.393-.523.08-1.22.182-3.87-1.026-3.2-1.464-5.263-4.733-5.421-4.945-.158-.212-1.295-1.724-1.295-3.287 0-1.564.81-2.336 1.099-2.637.289-.3.626-.375.834-.375.208 0 .416 0 .597.009.189.009.444-.075.696.536.262.634.896 2.193.975 2.353.08.158.132.344.027.553-.105.209-.158.339-.315.523-.158.184-.334.407-.482.555-.157.158-.323.328-.145.635.177.307.788 1.307 1.69 2.112 1.163 1.042 2.148 1.365 2.456 1.51.307.145.485.122.668-.088.184-.21.788-.918 1.002-1.233.214-.315.426-.263.708-.158.283.106 1.782.84 2.088.992.307.152.51.227.585.353.075.127.075.738-.17 1.423z"/>
+                </svg>
+            </a>
+        </div>
+
     </div>
 
     <!-- TOAST NOTIFICATION CONTAINER -->
     <div id="toast-container" class="toast-container"></div>
 
     <!-- Core App Logic -->
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/app.js?v=1721350001"></script>
 </body>
 </html>

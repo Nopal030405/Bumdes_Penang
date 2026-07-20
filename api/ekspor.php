@@ -40,6 +40,9 @@ try {
     // Tulis UTF-8 BOM untuk kompatibilitas Excel
     fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
     
+    // Tulis pemisah (separator) khusus agar rapi di Microsoft Excel versi apapun
+    fprintf($output, "sep=,\n");
+    
     // --- HEADER LAPORAN ---
     fputcsv($output, ["BUMDES PENANG - LAPORAN REKAP PENDAPATAN HARIAN"]);
     fputcsv($output, ["Tanggal Laporan", date('d F Y', $time)]);
