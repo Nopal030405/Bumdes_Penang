@@ -20,7 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = isset($_POST['username']) ? trim($_POST['username']) : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
     
-    if ($username === 'KKN30UTM' && $password === 'kkn30somalang2026') {
+    // Daftar akun yang diperbolehkan login
+    $akun_terdaftar = [
+        'KKN30UTM' => 'kkn30somalang2026',
+        'UIN30' => 'uin30somalang2026',
+        'BUMDES_SR' => 'sumberrezeki2026'
+    ];
+    
+    if (isset($akun_terdaftar[$username]) && $akun_terdaftar[$username] === $password) {
         // Simpan status login di session
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $username;
