@@ -1,6 +1,6 @@
 <?php
 /**
- * Logout System - BUMDes Penang
+ * Logout System - BUMDES SUMBER REZEKI
  */
 
 session_start();

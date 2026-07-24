@@ -1,5 +1,5 @@
 /**
- * Core Javascript Logic - BUMDes Penang
+ * Core Javascript Logic - BUMDES SUMBER REZEKI
  * Mengelola navigasi SPA, timer real-time, validasi tanggal kalender, dan AJAX API.
  */
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * API Transaksi Parkir Dinamis
- * BUMDes Penang
+ * BUMDES SUMBER REZEKI
  */
 
 header('Content-Type: application/json');

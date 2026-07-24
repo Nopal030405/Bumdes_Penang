@@ -1,7 +1,7 @@
 <?php
 /**
  * Konfigurasi Database & Koneksi PDO
- * BUMDes Penang - Sistem Rekap Penghasilan
+ * BUMDES SUMBER REZEKI - Sistem Rekap Penghasilan
  */
 
 // Pengaturan Zona Waktu Lokal (Sesuai WIB/WITA/WIT, diset ke Asia/Jakarta)

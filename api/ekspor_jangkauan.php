@@ -1,7 +1,7 @@
 <?php
 /**
  * API Ekspor Rekap Jangkauan Custom ke CSV (Excel)
- * BUMDes Penang
+ * BUMDES SUMBER REZEKI
  */
 
 // Proteksi: Pastikan user sudah login
@@ -65,7 +65,7 @@ try {
     fprintf($output, "sep=,\n");
     
     // --- HEADER LAPORAN ---
-    fputcsv($output, ["BUMDES PENANG - LAPORAN REKAP PENDAPATAN JANGKAUAN CUSTOM"]);
+    fputcsv($output, ["BUMDES SUMBER REZEKI - LAPORAN REKAP PENDAPATAN JANGKAUAN CUSTOM"]);
     fputcsv($output, ["Rentang Rekap", date('d F Y', $start_time) . " s.d. " . date('d F Y', $end_time)]);
     fputcsv($output, ["Diunduh Pada", date('d-m-Y H:i:s')]);
     fputcsv($output, []); // Baris kosong

@@ -1,6 +1,6 @@
 <?php
 /**
- * Dashboard Utama BUMDes Penang
+ * Dashboard Utama BUMDES SUMBER REZEKI
  * Sistem Rekap Keuangan Multi-Page (SPA)
  */
 
@@ -19,7 +19,7 @@ require_once __DIR__ . '/config/db.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Keuangan BUMDes Penang</title>
+    <title>Sistem Keuangan BUMDES SUMBER REZEKI</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,14 @@ require_once __DIR__ . '/config/db.php';
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Link Stylesheet -->
-    <link rel="stylesheet" href="assets/css/style.css?v=1753098000">
+    <link rel="stylesheet" href="assets/css/style.css?v=<?= time(); ?>">
+
+    <!-- Cache-bust background image agar selalu fresh tanpa Ctrl+Shift+R -->
+    <style>
+        body::before {
+            background-image: url('assets/background.jpg?v=<?= time(); ?>');
+        }
+    </style>
 </head>
 <body>
 
@@ -36,7 +43,7 @@ require_once __DIR__ . '/config/db.php';
         <!-- HEADER persistent -->
         <header class="app-header">
             <div class="logo-section">
-                <h1>BUMDes Penang</h1>
+                <h1>BUMDES SUMBER REZEKI</h1>
                 <p>Sistem Rekap Keuangan Mandiri</p>
             </div>
             
@@ -475,6 +482,6 @@ require_once __DIR__ . '/config/db.php';
     <div id="toast-container" class="toast-container"></div>
 
     <!-- Core App Logic -->
-    <script src="assets/js/app.js?v=1721350001"></script>
+    <script src="assets/js/app.js?v=<?= time(); ?>"></script>
 </body>
 </html>

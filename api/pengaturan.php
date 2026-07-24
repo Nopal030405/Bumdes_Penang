@@ -1,7 +1,7 @@
 <?php
 /**
  * API Pengaturan Sistem
- * BUMDes Penang
+ * BUMDES SUMBER REZEKI
  */
 
 header('Content-Type: application/json');

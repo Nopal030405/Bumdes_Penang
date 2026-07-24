@@ -1,5 +1,5 @@
 /* 
- * BUMDes Penang - Neo-Brutalism Style System (Revisi v2)
+ * BUMDES SUMBER REZEKI - Neo-Brutalism Style System (Revisi v2)
  * Flat, High-Contrast UI inspired by Natural Springs.
  * Extended Color Palette: Teal, Blue, Orange, Purple, Green, Pink.
  * Clean Off-White (#F5F5F0) background, thick Pure Black borders and hard box shadows.
@@ -1600,6 +1600,54 @@ tbody tr:hover td {
     box-shadow: 2px 2px 0px #0D0D0D;
     text-align: center;
     border-left: 4px solid var(--accent-pink);
+}
+
+/* Password Toggle Field */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .input-control {
+    padding-right: 2.8rem !important;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary, #0D0D0D);
+    border-radius: 4px;
+    z-index: 2;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: color 0.15s ease, transform 0.1s ease;
+}
+
+.password-toggle-btn:hover {
+    color: var(--accent-blue, #1A5BFF);
+}
+
+.password-toggle-btn:active {
+    transform: translateY(-50%) scale(0.92);
+}
+
+/* Sembunyikan ikon mata / clear bawaan browser agar tidak bertabrakan */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-contacts-auto-fill-button,
+input[type="password"]::-webkit-credentials-auto-fill-button {
+    display: none !important;
 }
 
 .login-footer-logos {
