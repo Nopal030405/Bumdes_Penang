@@ -8,10 +8,10 @@
 date_default_timezone_set('Asia/Jakarta');
 
 // Konfigurasi Database (Sesuaikan saat deploy di cPanel)
-define('DB_HOST', 'sql207.infinityfree.com');
-define('DB_USER', 'if0_42433547');
-define('DB_PASS', 'mLdETQ1jow9fazR'); 
-define('DB_NAME', 'if0_42433547_bumdes');
+define('DB_HOST', 'localhost');
+define('DB_USER', 'sume7291_admin');
+define('DB_PASS', 'kkn30utm2026somalang'); 
+define('DB_NAME', 'sume7291_bumdes');
 
 try {
     // Membuat koneksi database menggunakan PDO
