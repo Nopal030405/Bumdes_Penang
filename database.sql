@@ -1,7 +1,7 @@
 -- Skrip Inisialisasi Database BUMDES SUMBER REZEKI
 -- Buat database jika belum ada (opsional, sesuaikan saat di cPanel)
-CREATE DATABASE IF NOT EXISTS `bumdes_sumber_rezeki`;
-USE `bumdes_sumber_rezeki`;
+-- CREATE DATABASE IF NOT EXISTS `bumdes_sumber_rezeki`;
+-- USE `bumdes_sumber_rezeki`;
 
 -- 1. TABEL PENGATURAN (Konfigurasi Sistem)
 CREATE TABLE IF NOT EXISTS `pengaturan` (
